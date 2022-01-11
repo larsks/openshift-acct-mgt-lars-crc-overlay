@@ -1,0 +1,22 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: build-acct-mgt-image
+spec:
+  runPolicy: Serial
+  triggers:
+    - type: Generic
+      generic:
+        secretReference:
+          name: develop-trigger
+  source:
+    git:
+      uri: https://github.com/larsks/openshift-acct-mgt
+      ref: "develop"
+  strategy:
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+  output:
+    to:
+      kind: ImageStreamTag
+      name: openshift-acct-mgt:develop

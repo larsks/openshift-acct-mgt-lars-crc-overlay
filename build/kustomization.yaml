@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: onboarding
+resources:
+- buildconfig.yaml
+
+# You must create a file named "develop-trigger.env" that sets the
+# "WebHookSecretKey" variable, for example:
+#
+#     WebHookSecretKey=secret
+#
+# This is used to trigger a new build via the webhook.
+secretGenerator:
+  - name: develop-trigger
+    envs:
+      - develop-trigger.env
+
+configurations:
+  - namereference.yaml
